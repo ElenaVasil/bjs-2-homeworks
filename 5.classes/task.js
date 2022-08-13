@@ -82,3 +82,35 @@ class Library extends Book {
 		}
 	}
 }
+//Task3
+class Student {
+  constructor(name) {
+    this.name = name;
+    this.marks = [];
+  }
+  addMark(mark,subject) {
+    if (mark>0 && mark <6) {
+      this.marks.push([mark, subject]);
+    } else {
+      console.log(`Ошибка ввода ${mark}, оценка должна быть в пределах 1 - 5!`);
+    }
+  } 
+  getAverage() {
+    let sum = 0;
+    for (let i=0; i<this.marks.length; i++) {
+      sum += this.marks[i][0];
+    }
+    return (sum/this.marks.length);
+  }
+  getAverageBySubject(subjectName) {
+    let arr = [];    
+    let sum = 0;
+    for (let i=0; i<this.marks.length; i++) {
+      if (this.marks[i][1] === subjectName) {
+        sum += this.marks[i][0];
+        arr.push(this.marks[i][0]);
+      }  
+    }
+    return (sum/arr.length);
+  }
+}
