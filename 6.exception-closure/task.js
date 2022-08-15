@@ -8,22 +8,21 @@ function parseCount(count) {
 }
 function validateCount(numb) {
   try {
-    const numbParse = parseCount(numb);
-    return numbParse;
-  } catch(Error) {
-   return Error;
+    return parseCount(numb);
+  } catch(error) {
+   return error;
   }
 }
 //Task2
 class Triangle {
-  	constructor(a, b, c) {
-    	this.a = a;
-    	this.b = b;
-    	this.c = c;	
-    	if ((this.a+this.b < this.c) || (this.a+this.c < this.b) || (this.c+this.b < this.a)) {
+  constructor(a, b, c) {
+    this.a = a;
+    this.b = b;
+    this.c = c;	
+    if ((a+b < c) || (a+c < b) || (c+b < a)) {
 			throw new Error('Треугольник с такими сторонами не существует');	 
-  		}
   	}
+  }
 	getPerimeter() {
 	  	return (this.a + this.b + this.c);
 	}
