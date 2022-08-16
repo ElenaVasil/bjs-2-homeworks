@@ -3,7 +3,7 @@ class AlarmClock {
 		this.alarmCollection = [];
 		this.timerId = null;
 	}
-	addClock(time, msg, id) {
+	addClock(time, func, id) {
 		if (id === undefined) {
 			throw new Error('error text');
 		};
@@ -11,7 +11,7 @@ class AlarmClock {
 			console.error('Звонок с таким id уже существует');
 			return;
 		} else {
-			this.alarmCollection.push({time, msg, id});
+			this.alarmCollection.push({time, func, id});
 		}
 	}
 	removeClock(id) {
@@ -19,7 +19,9 @@ class AlarmClock {
 		if (searchItem>=0) {
 			this.alarmCollection.splice(searchItem,1);
 			return true;
-		} else return false;
+		} else {
+			return false;
+		}
 	}
 	getCurrentFormattedTime() {
 		const currentDate = new Date();
@@ -28,21 +30,20 @@ class AlarmClock {
     	return (`${hours}:${minutes}`);
 	}
 	start() {
-		const checkClock = (time, msg, id) => {
-			if (getCurrentFormattedTime() === time) {
-				console.log(msg);
+		const checkClock = (bell) => {
+			if (getCurrentFormattedTime() === bell.time) {
+				bell.func();
 			}
 		}
-		/*if (this.timerId === null) {
-			this.timerId = setInterval(
-			(this.alarmCollection.forEach(i => i)) => {
+		if (this.timerId === null) {
+			this.timerId = setInterval(this.alarmCollection.forEach(i => i) => {
 				checkClock(i);
-			}, 100);
-		}*/
+			}, 1000);
+		}
 	}
 	stop() {
 		if (!this.timerId === null) {
-			clearInterval(timerId);
+			clearInterval(this.timerId);
 			this.timerId === null;
 		}
 	}
