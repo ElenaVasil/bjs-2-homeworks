@@ -31,20 +31,20 @@ class AlarmClock {
 	}
 	start() {
 		const checkClock = (bell) => {
-			if (getCurrentFormattedTime() === bell.time) {
+			if (this.getCurrentFormattedTime() === bell.time) {
 				bell.func();
 			}
 		}
 		if (this.timerId === null) {
-			this.timerId = setInterval(this.alarmCollection.forEach(i => i) => {
-				checkClock(i);
-			}, 1000);
+			this.timerId = setInterval(() => {
+        		this.alarmCollection.forEach(alarm => checkClock(alarm))
+      		}, 1000);
 		}
 	}
 	stop() {
-		if (!this.timerId === null) {
+		if (this.timerId !== null) {
 			clearInterval(this.timerId);
-			this.timerId === null;
+			this.timerId = null;
 		}
 	}
 	printAlarms() {
@@ -55,3 +55,17 @@ class AlarmClock {
 		this.alarmCollection.forEach((i) => this.alarmCollection.splice(i));	
 	}
 }
+function testCase() {
+	let alarm = new AlarmClock;
+	console.log(alarm.getCurrentFormattedTime());
+	alarm.addClock('16:00', () => console.log("пора вставать1"), 1);
+	alarm.addClock('15:09', () => {console.log("пора вставать2"); alarm.removeClock(2)}, 2);
+	alarm.addClock('15:38', () => {console.log("пора вставать3"); alarm.clearAlarms()}, 3);
+	console.log(alarm);
+	console.log(alarm.removeClock(2));
+	console.log(alarm);
+	alarm.start();
+	alarm.printAlarms();
+	
+}
+testCase();
